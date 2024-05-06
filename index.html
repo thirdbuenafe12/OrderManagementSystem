@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management System</title>
+</head>
+<body>
+
+
+    <form id="orderForm">
+    
+    <h2>Welcome to the canteen! Here are the prices</h2>
+		<p><ul>
+        <li>Fishball - 30 PHP</li>
+        	<li>Kikiam - 40 PHP</li>
+            <li>Corndog - 50 PHP</li>
+        </ul></p>
+        
+        <p>
+            <label for="order">Choose your order:</label><br>
+            <select id="order" name="order">
+                <option value="fishball">Fishball</option>
+                <option value="kikiam">Kikiam</option>
+                <option value="corndog">Corndog</option>
+            </select>
+        </p>
+        
+        <p><label for="quantity">Quantity:</label><br>
+            <input type="number" id="quantity" name="quantity" min="1" required></p>
+        
+        <p><label for="cash">Cash:</label><br>
+            <input type="number" id="cash" name="cash" min="0" required></p>
+
+        <p><input type="button" value="Submit" onclick="calculateOrder()"></p>
+    </form>
+
+    <div id="orderResult"></div>
+
+    <script>
+        function calculateOrder() {
+            var order = document.getElementById("order").value;
+            var quantity = parseInt(document.getElementById("quantity").value);
+            var cash = parseInt(document.getElementById("cash").value);
+
+            var prices = {
+                "fishball": 30,
+                "kikiam": 40,
+                "corndog": 50
+            };
+            
+            var totalCost = prices[order] * quantity;
+            var change = cash - totalCost;
+
+            if (!isNaN(totalCost) && !isNaN(change) && change >= 0) {
+                document.getElementById("orderResult").innerHTML = "<h2>Total Cost: " + totalCost + " PHP</h2>" +
+                    "<h2>Change: " + change + " PHP</h2>" +
+                    "<h2>Thank you for your order!</h2>";
+
+                document.getElementById("orderForm").style.display = "none";
+            } else {
+                document.getElementById("orderResult").innerHTML = "<h2>Error: Please provide valid numeric values for quantity and cash.</h2>";
+            }
+        }
+    </script>
+
+</body>
+</html>
